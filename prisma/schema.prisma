@@ -48,7 +48,7 @@ model User {
 model IPLTeams {
   id        String   @id @map("_id")
   fullName  String
-  shortName String
+  shortName String   @unique
   teamid    String   @unique
   logo      String
   players   Player[]

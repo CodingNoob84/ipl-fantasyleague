@@ -37,3 +37,16 @@ export async function createEditPlayer(data) {
     return [];
   }
 }
+
+export async function getTeamDetails(teamname) {
+  console.log(baseurl);
+  try {
+    const response = await axios.get(
+      `${baseurl}api/team/getateam?teamname=${teamname}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
