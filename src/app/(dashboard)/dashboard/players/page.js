@@ -16,7 +16,6 @@ async function PlayersPage() {
         <AddPlayer />
       </div>
       <AllPlayerTable data={data.data} />
-      {/* <div>{AllPlayers.map}</div> */}
     </div>
   );
 }

@@ -26,7 +26,7 @@ export async function GET() {
       };
     });
 
-    console.log(formattedPlayers);
+    //console.log(formattedPlayers);
 
     return NextResponse.json({ success: true, data: formattedPlayers });
   } catch (error) {
