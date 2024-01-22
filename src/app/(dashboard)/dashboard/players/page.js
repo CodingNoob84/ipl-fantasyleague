@@ -7,7 +7,7 @@ import React from "react";
 
 async function PlayersPage() {
   const data = await getAllPlayers();
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col">

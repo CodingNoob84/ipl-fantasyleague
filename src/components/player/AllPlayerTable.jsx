@@ -43,7 +43,7 @@ export const columns = [
 ];
 
 function AllPlayerTable({ data }) {
-  console.log(data);
+  //console.log(data);
   const table = useReactTable({
     data,
     columns,

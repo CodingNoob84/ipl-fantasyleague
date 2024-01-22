@@ -3,6 +3,7 @@ import "./globals.css";
 import NextAuthSessionProvider from "@/providers/sessionprovider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 

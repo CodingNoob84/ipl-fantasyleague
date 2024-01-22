@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
-async function Dashboardlayout({ children }) {
+async function Websitelayout({ children }) {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
@@ -17,4 +17,4 @@ async function Dashboardlayout({ children }) {
   );
 }
 
-export default Dashboardlayout;
+export default Websitelayout;
