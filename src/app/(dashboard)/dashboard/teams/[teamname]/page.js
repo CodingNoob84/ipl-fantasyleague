@@ -25,7 +25,10 @@ async function TeamDetailsPage({ params }) {
         </div>
         <div className="flex flex-row flex-wrap justify-start gap-4">
           {data.players.map((player) => (
-            <div className="flex flex-row w-[250px] gap-5 border p-2">
+            <div
+              key={player.id}
+              className="flex flex-row w-[250px] gap-5 border p-2"
+            >
               <Avatar>
                 <AvatarImage src={player.profileimage} alt={player.fullname} />
                 <AvatarFallback>{getInitials(player.fullname)}</AvatarFallback>
