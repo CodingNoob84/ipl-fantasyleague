@@ -2,6 +2,8 @@ import cloudinary from "@/lib/cloudinary";
 import prisma from "@/lib/prismaclient";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const allteams = await prisma.IPLTeams.findMany({});
