@@ -53,6 +53,7 @@ export function EditPlayer({ initialvalues, setOpen }) {
     const result = await createEditPlayer(data);
     console.log(result);
     if (result.success) {
+      form.reset();
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["allplayers"] });
     }

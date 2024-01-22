@@ -3,7 +3,7 @@ import React from "react";
 
 async function TeamsPage() {
   const { data } = await getAllTeams();
-  //console.log(data);
+  console.log(data);
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="flex flex-col">
