@@ -21,22 +21,22 @@ export async function POST(request) {
       data.profileimage = result.secure_url;
     }
     console.log("entered");
+    console.log(data);
     if (data.id) {
       console.log("update", data.id);
       // ID is provided, update the existing record
-      const updatedPlayer = await prisma.player.upsert({
+      const updatedPlayer = await prisma.player.update({
         where: { id: data.id },
-        update: {
+        data: {
           fullname: data.fullname,
-          profileImage: data.profileImage,
+          profileimage: data.profileimage,
           role: data.role,
-          teamid: data.team,
+          teamid: data.teamid,
           country: data.country,
-          updatedAt: new Date(),
+          //updatedAt: new Date(),
         },
-        create: {}, // An empty object since we're updating
       });
-
+      console.log(updatedPlayer);
       //return updatedPlayer;
       return NextResponse.json({ success: true, data: updatedPlayer });
     } else {
@@ -45,7 +45,7 @@ export async function POST(request) {
           fullname: data.fullname,
           profileimage: data.profileimage, // Ensure the correct field name (profileimage) and correct case
           role: data.role,
-          team: data.team,
+          teamid: data.teamid,
           country: data.country,
         },
       });

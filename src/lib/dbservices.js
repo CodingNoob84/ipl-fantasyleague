@@ -1,15 +1,12 @@
 import axios from "axios";
 
-const baseurl = process.env.NEXTAUTH_URL;
-const api = axios.create({
-  baseURL: process.env.NEXTAUTH_URL,
-});
+const baseurl = process.env.NEXT_PUBLIC_BASEURL;
 
 export async function getAllPlayers() {
   try {
     const response = await axios.get(`${baseurl}api/player/getall`);
     //console.log(response);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching posts:", error.message);
     return [];
@@ -20,6 +17,20 @@ export async function getAllTeams() {
   try {
     const response = await axios.get(`${baseurl}api/team/getallteams`);
     //console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function createEditPlayer(data) {
+  console.log(baseurl);
+  try {
+    const response = await axios.post(
+      `${baseurl}api/player/insertplayer`,
+      data
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching posts:", error.message);

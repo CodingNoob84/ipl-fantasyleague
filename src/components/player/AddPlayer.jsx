@@ -20,6 +20,12 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { createEditPlayer } from "@/lib/dbservices";
+import { useState } from "react";
+import { ButtonLoading } from "../ui/buttonloading";
+import { IoReload } from "react-icons/io5";
+import { revalidatePath } from "next/cache";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Role = ["Batsman", "WicketKeeper", "Allrounder", "Blower"];
 
@@ -37,22 +43,31 @@ const TEAMS = [
 ];
 
 export function AddPlayer() {
+  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
   const form = useForm({
     //resolver: yupResolver(schema),
     defaultValues: {
-      name: "",
-      profileimage: "",
+      fullname: "",
+      profileimage:
+        "https://res.cloudinary.com/dzxgw55uq/image/upload/v1705587385/iplfantasyleague/dtj54fcub9hdxxolpaht.webp",
       role: "",
-      team: "",
+      teamid: "",
       country: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    //console.log(data)
+    const result = await createEditPlayer(data);
+    console.log(result);
+    if (result.success) {
+      setOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["allplayers"] });
+    }
+  };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Add Player</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <Button onClick={() => setOpen(true)}>Add Player</Button>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -63,7 +78,7 @@ export function AddPlayer() {
             <div className="px-4 pb-4 space-y-6">
               <FormField
                 control={form.control}
-                name="name"
+                name="fullname"
                 render={({ field }) => (
                   <FormItem className="flex flex-row justify-center items-center gap-5">
                     <FormLabel className="w-1/4">Name</FormLabel>
@@ -104,7 +119,7 @@ export function AddPlayer() {
               />
               <FormField
                 control={form.control}
-                name="team"
+                name="teamid"
                 render={({ field }) => (
                   <FormItem className="flex flex-row justify-center items-center gap-5">
                     <FormLabel className="w-1/4">Team</FormLabel>
@@ -162,7 +177,16 @@ export function AddPlayer() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full">Update Profile</Button>
+              <Button className="w-full" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? (
+                  <>
+                    <IoReload className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  "Update Profile"
+                )}
+              </Button>
             </div>
           </form>
         </Form>

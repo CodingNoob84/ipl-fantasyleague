@@ -5,11 +5,11 @@ import { Input } from "../ui/input";
 import AvatarEditor from "react-avatar-editor";
 import { Slider } from "../ui/slider";
 
-const DefaultPersonImage =
-  "https://res.cloudinary.com/dzxgw55uq/image/upload/v1705587385/iplfantasyleague/dtj54fcub9hdxxolpaht.webp";
+// const DefaultPersonImage =
+//   "https://res.cloudinary.com/dzxgw55uq/image/upload/v1705587385/iplfantasyleague/dtj54fcub9hdxxolpaht.webp";
 
 function ImageEditor({ getimage, setvalue }) {
-  const [image, setImage] = useState(getimage || DefaultPersonImage);
+  const [image, setImage] = useState(getimage);
   const [imagedataurl, setImagedataurl] = useState("");
   const [editorShow, setEditorShow] = useState(false);
   const [scale, setScale] = useState(1);
@@ -29,7 +29,7 @@ function ImageEditor({ getimage, setvalue }) {
       const canvasScaled = editorRef.current.getImageScaledToCanvas();
       if (canvas && canvasScaled) {
         const dataURL = canvasScaled.toDataURL("image/jpeg");
-        console.log("Data URL:", dataURL);
+        //console.log("Data URL:", dataURL);
         setvalue("profileimage", dataURL);
         setImage(dataURL);
         setEditorShow(false);
@@ -54,7 +54,7 @@ function ImageEditor({ getimage, setvalue }) {
   const handleSliderChange = (value) => {
     //console.log(value);
     const scale = 0.5 + (value[0] / 100) * 1;
-    console.log(scale);
+    //console.log(scale);
     setScale(scale);
   };
 

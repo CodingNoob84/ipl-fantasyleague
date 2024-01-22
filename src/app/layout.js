@@ -4,6 +4,7 @@ import NextAuthSessionProvider from "@/providers/sessionprovider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { ReactQueryClientProvider } from "@/providers/reactqueryprovider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,11 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextAuthSessionProvider session={session}>
-          {children}
-        </NextAuthSessionProvider>
+        <ReactQueryClientProvider>
+          <NextAuthSessionProvider session={session}>
+            {children}
+          </NextAuthSessionProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );
