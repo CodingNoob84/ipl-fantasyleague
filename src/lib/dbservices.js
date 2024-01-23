@@ -39,11 +39,21 @@ export async function createEditPlayer(data) {
 }
 
 export async function getTeamDetails(teamname) {
-  console.log(baseurl);
+  //console.log(baseurl);
   try {
     const response = await axios.get(
       `${baseurl}api/team/getateam?teamname=${teamname}`
     );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getUpcomingMatches() {
+  try {
+    const response = await axios.get(`${baseurl}api/matches/upcoming`);
     return response.data;
   } catch (error) {
     console.error("Error fetching posts:", error.message);

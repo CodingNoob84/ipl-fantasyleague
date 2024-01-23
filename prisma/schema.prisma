@@ -46,12 +46,14 @@ model User {
 }
 
 model IPLTeams {
-  id        String   @id @map("_id")
-  fullName  String
-  shortName String   @unique
-  teamid    String   @unique
-  logo      String
-  players   Player[]
+  id          String    @id @map("_id")
+  fullName    String
+  shortName   String    @unique
+  teamid      String    @unique
+  logo        String
+  players     Player[]
+  homeMatches Matches[] @relation("HomeTeam")
+  awayMatches Matches[] @relation("AwayTeam")
 }
 
 model Player {
@@ -62,6 +64,16 @@ model Player {
   role         String?
   team         IPLTeams? @relation(fields: [teamid], references: [teamid])
   teamid       String?
+}
+
+model Matches {
+  id         String   @id @default(cuid()) @map("_id")
+  datetime   DateTime
+  timezone   String
+  hometeamid String
+  hometeam   IPLTeams @relation(name: "HomeTeam", fields: [hometeamid], references: [teamid])
+  awayteamid String
+  awayteam   IPLTeams @relation(name: "AwayTeam", fields: [awayteamid], references: [teamid])
 }
 
 model test {

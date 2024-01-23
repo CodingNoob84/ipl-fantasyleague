@@ -20,7 +20,7 @@ async function PlayersPage() {
   // });
 
   return (
-    <div className="w-full max-w-5xl mx-auto flex flex-col">
+    <div className="w-full max-w-5xl mx-auto flex flex-col p-4">
       <div className="flex flex-row justify-between my-4">
         <div className="text-4xl font-bold">All Players</div>
         <AddPlayer />
