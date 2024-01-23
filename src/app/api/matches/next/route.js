@@ -2,6 +2,8 @@ import prisma from "@/lib/prismaclient";
 import { NextResponse } from "next/server";
 import { parseISO } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const currentDate = new Date();

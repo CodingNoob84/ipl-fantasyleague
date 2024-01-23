@@ -34,10 +34,18 @@ function PlayersTab({ hometeam, awayteam }) {
     }
   };
 
+  const handleSubmit = () => {
+    console.log("team", selectedTeam);
+    console.log("player", selectedPlayers);
+  };
+
   return (
     <>
       <div className="w-[400px] flex flex-col gap-4 my-2">
-        <div className="border bg-violet-400 p-4 text-center text-xl rounded-lg shadow-lg">
+        <div
+          onClick={handleSubmit}
+          className="border bg-violet-400 p-4 text-center text-xl rounded-lg shadow-lg"
+        >
           Update
         </div>
         <div className="grid grid-cols-2 gap-2 border rounded-md shadow-lg p-2">
@@ -54,6 +62,7 @@ function PlayersTab({ hometeam, awayteam }) {
             <div className="flex flex-col gap-4">
               {hometeam.players.map((player) => (
                 <div
+                  key={player.id}
                   onClick={() => handleSelectPlayers(player)}
                   className={cn(
                     " border rounded-lg shadow-sm cursor-pointer flex flex-row gap-4 justify-start items-center",
@@ -89,6 +98,7 @@ function PlayersTab({ hometeam, awayteam }) {
             <div className="flex flex-col gap-4">
               {awayteam.players.map((player) => (
                 <div
+                  key={player.id}
                   onClick={() => handleSelectPlayers(player)}
                   className={cn(
                     " border rounded-lg shadow-sm cursor-pointer  flex flex-row gap-4 justify-start items-center",
