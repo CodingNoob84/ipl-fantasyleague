@@ -17,12 +17,6 @@ function PredictionsCard({ userid, matchid }) {
     queryKey: ["allpredictions", userid, matchid],
     queryFn: () => getAllPredictions({ matchid, userid }),
   });
-  console.log(predictionsdata);
-  // const { data: matchdetailsdata } = useQuery({
-  //   queryKey: ["matchdetails", matchid],
-  //   queryFn: () => getMatchbyId({ matchid }),
-  // });
-  //console.log(matchdetailsdata);
   const [showPredictions, setShowPredictions] = useState(true);
   let players;
   if (predictionsdata.data) {
@@ -36,7 +30,6 @@ function PredictionsCard({ userid, matchid }) {
           predictionsdata.data[playerKey].id === predictionsdata.data.captainid,
       })
     );
-    //console.log(players);
   } else {
     players = ["playerone", "playertwo", "playerthree", "playerfour"].map(
       (playerKey) => ({

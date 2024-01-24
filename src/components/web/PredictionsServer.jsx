@@ -9,7 +9,7 @@ import {
 
 async function PredictionsServer({ matchid, userid }) {
   const { data: predictions } = await getAllPredictions({ matchid, userid });
-  console.log(predictions);
+  //console.log(predictions);
   const { data: matchdetails } = await getMatchbyId({ matchid });
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({

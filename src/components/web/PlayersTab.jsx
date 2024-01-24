@@ -15,14 +15,7 @@ import { insertUpdatePredictions } from "@/lib/dbservices";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IoReload } from "react-icons/io5";
 
-function PlayersTab({
-  hometeam,
-  awayteam,
-  matchid,
-  teamid,
-  players,
-  setShowPredictions,
-}) {
+function PlayersTab({ matchid, teamid, players, setShowPredictions }) {
   const queryClient = useQueryClient();
   const { data: matchdetailsdata } = useQuery({
     queryKey: ["matchdetails", matchid],
@@ -31,7 +24,7 @@ function PlayersTab({
   const [updateLoading, setUpdateLoading] = useState(false);
   const { data: session, status } = useSession();
   const [selectedTeam, setSelectedTeam] = useState(teamid);
-  console.log(selectedTeam);
+  //console.log(selectedTeam);
   // const [selectPredictions, setSelectPredictions] = useState(predictions);
   //console.log("predictions", selectPredictions);
   const [selectedPlayers, setSelectedPlayers] = useState(players);

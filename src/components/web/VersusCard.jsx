@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { getFormattedDatetime } from "@/lib/utils";
 
 function VersusCard({ verusdata }) {
-  console.log(verusdata);
+  //console.log(verusdata);
   return (
     <div className=" flex flex-col border p-2 rounded-md shadow-md">
       <div className="flex flex-row justify-center items-center gap-4">
@@ -31,6 +31,7 @@ function VersusCard({ verusdata }) {
       </div>
       <div className="text-sm text-center">
         {getFormattedDatetime(verusdata.datetime)}
+        {verusdata.datetime}
       </div>
     </div>
   );
