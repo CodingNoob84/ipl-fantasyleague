@@ -14,8 +14,17 @@ export function getInitials(fullName) {
   return initials;
 }
 
-export function getFormattedDatetime(dateString) {
-  const parsedDate = parseISO(dateString);
-  const formattedDate = format(parsedDate, "eeee do MMM h a", { locale: enUS });
-  return formattedDate;
+export function getFormattedDatetime(inputDateString) {
+  const date = new Date(inputDateString);
+  const options = { weekday: "long", day: "numeric", month: "short" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const formattedTime =
+    hours % 12 === 0
+      ? "12"
+      : (hours % 12).toString() + ":" + (minutes < 10 ? "0" : "") + minutes;
+  const result = `${formattedDate} ${formattedTime} ${ampm}`;
+  return result;
 }
