@@ -13,6 +13,7 @@ import {
 } from "../ui/hover-card";
 import { insertUpdatePredictions } from "@/lib/dbservices";
 import { useQueryClient } from "@tanstack/react-query";
+import { IoReload } from "react-icons/io5";
 
 function PlayersTab({
   hometeam,
@@ -23,7 +24,7 @@ function PlayersTab({
   setShowPredictions,
 }) {
   const queryClient = useQueryClient();
-
+  const [updateLoading, setUpdateLoading] = useState(false);
   const { data: session, status } = useSession();
   const [selectedTeam, setSelectedTeam] = useState(teamid);
   // const [selectPredictions, setSelectPredictions] = useState(predictions);
@@ -99,6 +100,7 @@ function PlayersTab({
   };
 
   const handleSubmit = async () => {
+    setUpdateLoading(true);
     const playerIdsObject = selectedPlayers.reduce((acc, player) => {
       acc[player.id] = player.playerid;
       return acc;
@@ -123,6 +125,7 @@ function PlayersTab({
       });
       setShowPredictions(true);
     }
+    setUpdateLoading(false);
   };
 
   return (
@@ -130,9 +133,16 @@ function PlayersTab({
       <div className="w-[400px] flex flex-col gap-4 my-2">
         <div
           onClick={handleSubmit}
-          className="border bg-violet-400 p-4 text-center text-xl rounded-lg shadow-lg"
+          className="border bg-violet-400 p-4 text-center text-xl rounded-lg shadow-lg cursor-pointer"
         >
-          Update
+          {updateLoading ? (
+            <div className="flex justify-center items-center text-center">
+              <IoReload className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </div>
+          ) : (
+            "Update"
+          )}
         </div>
         <div className="flex flex-col gap-4 border rounded-md shadow-lg p-2">
           <div className="grid grid-cols-2 gap-2">
