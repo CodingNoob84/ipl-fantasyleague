@@ -6,6 +6,7 @@ import { getAllPredictions, getNextMatch } from "@/lib/dbservices";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import PredictionsServer from "./PredictionsServer";
+import GameRules from "./GameRules";
 
 const data = {
   id: "clrpyf4ac0007wl0gw4s4ato2",
@@ -433,7 +434,7 @@ const data = {
 
 async function NextMatch() {
   const { data: nextmatch } = await getNextMatch();
-  console.log(nextmatch);
+  //console.log(nextmatch);
   const session = await getServerSession(authOptions);
   //const { data: predictions } = await getAllPredictions();
   const verusdata = {
@@ -446,6 +447,7 @@ async function NextMatch() {
   return (
     <div className="flex flex-col">
       <VersusCard verusdata={verusdata} />
+      <GameRules />
       <PredictionsServer matchid={nextmatch.id} userid={session.user.id} />
     </div>
   );

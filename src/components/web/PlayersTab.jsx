@@ -12,7 +12,7 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import { insertUpdatePredictions } from "@/lib/dbservices";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IoReload } from "react-icons/io5";
 
 function PlayersTab({
@@ -24,9 +24,14 @@ function PlayersTab({
   setShowPredictions,
 }) {
   const queryClient = useQueryClient();
+  const { data: matchdetailsdata } = useQuery({
+    queryKey: ["matchdetails", matchid],
+    queryFn: () => getMatchbyId({ matchid }),
+  });
   const [updateLoading, setUpdateLoading] = useState(false);
   const { data: session, status } = useSession();
   const [selectedTeam, setSelectedTeam] = useState(teamid);
+  console.log(selectedTeam);
   // const [selectPredictions, setSelectPredictions] = useState(predictions);
   //console.log("predictions", selectPredictions);
   const [selectedPlayers, setSelectedPlayers] = useState(players);
@@ -147,22 +152,28 @@ function PlayersTab({
         <div className="flex flex-col gap-4 border rounded-md shadow-lg p-2">
           <div className="grid grid-cols-2 gap-2">
             <div
-              onClick={() => setSelectedTeam(hometeam.teamid)}
+              onClick={() =>
+                setSelectedTeam(matchdetailsdata.data.hometeam.teamid)
+              }
               className={cn(
                 "text-center font-bold  border p-2 cursor-pointer rounded-lg shadow-md",
-                selectedTeam === hometeam.teamid && "bg-orange-300"
+                selectedTeam === matchdetailsdata.data.hometeam.teamid &&
+                  "bg-orange-300"
               )}
             >
-              {hometeam.shortName}
+              {matchdetailsdata.data.hometeam.shortName}
             </div>
             <div
-              onClick={() => setSelectedTeam(awayteam.teamid)}
+              onClick={() =>
+                setSelectedTeam(matchdetailsdata.data.awayteam.teamid)
+              }
               className={cn(
                 "text-center font-bold  border p-2 cursor-pointer rounded-lg shadow-md",
-                selectedTeam === awayteam.teamid && "bg-orange-300"
+                selectedTeam === matchdetailsdata.data.awayteam.teamid &&
+                  "bg-orange-300"
               )}
             >
-              {awayteam.shortName}
+              {matchdetailsdata.data.awayteam.shortName}
             </div>
           </div>
           <div className="flex flex-col gap-4">
@@ -204,7 +215,7 @@ function PlayersTab({
         </div>
         <div className="grid grid-cols-2 gap-2 border rounded-md shadow-lg p-2">
           <div className="flex flex-col gap-4">
-            {hometeam.players.map((player) => (
+            {matchdetailsdata.data.hometeam.players.map((player) => (
               <div
                 key={player.id}
                 onClick={() => handleSelectPlayers(player)}
@@ -230,7 +241,7 @@ function PlayersTab({
           </div>
 
           <div className="flex flex-col gap-4">
-            {awayteam.players.map((player) => (
+            {matchdetailsdata.data.awayteam.players.map((player) => (
               <div
                 key={player.id}
                 onClick={() => handleSelectPlayers(player)}
