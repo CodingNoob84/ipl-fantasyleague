@@ -20,7 +20,11 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        id: "desc",
+      },
     });
+
     const formattedPlayers = allPlayersWithTeamShortNames.map((player) => {
       return {
         ...player,

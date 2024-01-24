@@ -35,45 +35,103 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  role          String    @default("user")
-  accounts      Account[]
-  sessions      Session[]
+  id               String             @id @default(cuid()) @map("_id")
+  name             String?
+  email            String?            @unique
+  emailVerified    DateTime?
+  image            String?
+  role             String             @default("user")
+  accounts         Account[]
+  sessions         Session[]
+  teamprediction   TeamPrediction[]
+  PlayerPrediction PlayerPrediction[]
+  prediction       Prediction[]
 }
 
 model IPLTeams {
-  id          String    @id @map("_id")
-  fullName    String
-  shortName   String    @unique
-  teamid      String    @unique
-  logo        String
-  players     Player[]
-  homeMatches Matches[] @relation("HomeTeam")
-  awayMatches Matches[] @relation("AwayTeam")
+  id             String           @id @map("_id")
+  fullName       String
+  shortName      String           @unique
+  teamid         String           @unique
+  logo           String
+  players        Player[]
+  homeMatches    Matches[]        @relation("HomeTeam")
+  awayMatches    Matches[]        @relation("AwayTeam")
+  TeamPrediction TeamPrediction[]
+  Prediction     Prediction[]
 }
 
 model Player {
-  id           String    @id @default(cuid()) @map("_id")
-  country      String?
-  fullname     String?
-  profileimage String?
-  role         String?
-  team         IPLTeams? @relation(fields: [teamid], references: [teamid])
-  teamid       String?
+  id               String             @id @default(cuid()) @map("_id")
+  country          String?
+  fullname         String?
+  profileimage     String?
+  role             String?
+  team             IPLTeams?          @relation(fields: [teamid], references: [teamid])
+  teamid           String?
+  playerprediction PlayerPrediction[] @relation("predictedplayer")
+  predictionpone   Prediction[]       @relation("playerone")
+  predictionptwo   Prediction[]       @relation("playertwo")
+  predictionpthree Prediction[]       @relation("playerthree")
+  predictionpfour  Prediction[]       @relation("playerfour")
+  captain          Prediction[]       @relation("captain")
 }
 
 model Matches {
-  id         String   @id @default(cuid()) @map("_id")
-  datetime   DateTime
-  timezone   String
-  hometeamid String
-  hometeam   IPLTeams @relation(name: "HomeTeam", fields: [hometeamid], references: [teamid])
-  awayteamid String
-  awayteam   IPLTeams @relation(name: "AwayTeam", fields: [awayteamid], references: [teamid])
+  id               String             @id @default(cuid()) @map("_id")
+  datetime         String
+  timezone         String
+  hometeamid       String
+  hometeam         IPLTeams           @relation(name: "HomeTeam", fields: [hometeamid], references: [teamid])
+  awayteamid       String
+  awayteam         IPLTeams           @relation(name: "AwayTeam", fields: [awayteamid], references: [teamid])
+  teamprediction   TeamPrediction[]
+  playerprediction PlayerPrediction[]
+  prediction       Prediction[]
+}
+
+model Prediction {
+  id            String   @id @default(cuid()) @map("_id")
+  userid        String
+  user          User     @relation(fields: [userid], references: [id])
+  matchid       String
+  match         Matches  @relation(fields: [matchid], references: [id])
+  teamid        String
+  team          IPLTeams @relation(fields: [teamid], references: [teamid])
+  playeroneid   String
+  playerone     Player   @relation("playerone", fields: [playeroneid], references: [id])
+  playertwoid   String
+  playertwo     Player   @relation("playertwo", fields: [playertwoid], references: [id])
+  playerthreeid String
+  playerthree   Player   @relation("playerthree", fields: [playerthreeid], references: [id])
+  playerfourid  String
+  playerfour    Player   @relation("playerfour", fields: [playerfourid], references: [id])
+  captainid     String
+  captain       Player   @relation("captain", fields: [captainid], references: [id])
+
+  @@unique([userid, matchid])
+}
+
+model TeamPrediction {
+  id      String   @id @default(cuid()) @map("_id")
+  userid  String
+  user    User     @relation(fields: [userid], references: [id])
+  matchid String
+  match   Matches  @relation(fields: [matchid], references: [id])
+  teamid  String
+  team    IPLTeams @relation(fields: [teamid], references: [teamid])
+
+  @@unique([userid, matchid])
+}
+
+model PlayerPrediction {
+  id       String  @id @default(cuid()) @map("_id")
+  userid   String
+  user     User    @relation(fields: [userid], references: [id])
+  matchid  String
+  match    Matches @relation(fields: [matchid], references: [id])
+  playerid String
+  player   Player  @relation(name: "predictedplayer", fields: [playerid], references: [id])
 }
 
 model test {

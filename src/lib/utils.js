@@ -8,6 +8,7 @@ export function cn(...inputs) {
 }
 
 export function getInitials(fullName) {
+  //console.log(fullName);
   const words = fullName.split(" ");
   const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
   return initials;

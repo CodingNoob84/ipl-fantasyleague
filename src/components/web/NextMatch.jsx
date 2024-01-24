@@ -1,6 +1,11 @@
 import React from "react";
 import VersusCard from "./VersusCard";
 import PlayersTab from "./PlayersTab";
+import PredictionsCard from "./PredictionsCard";
+import { getAllPredictions, getNextMatch } from "@/lib/dbservices";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import PredictionsServer from "./PredictionsServer";
 
 const data = {
   id: "clrpyf4ac0007wl0gw4s4ato2",
@@ -426,18 +431,22 @@ const data = {
   },
 };
 
-function NextMatch() {
+async function NextMatch() {
+  const { data: nextmatch } = await getNextMatch();
+  console.log(nextmatch);
+  const session = await getServerSession(authOptions);
+  //const { data: predictions } = await getAllPredictions();
   const verusdata = {
-    datetime: data.datetime,
-    hometeam: data.hometeam.shortName,
-    hometeamlogo: data.hometeam.logo,
-    awayteam: data.awayteam.shortName,
-    awayteamlogo: data.awayteam.logo,
+    datetime: nextmatch?.datetime,
+    hometeam: nextmatch?.hometeam.shortName,
+    hometeamlogo: nextmatch?.hometeam.logo,
+    awayteam: nextmatch?.awayteam.shortName,
+    awayteamlogo: nextmatch?.awayteam.logo,
   };
   return (
     <div className="flex flex-col">
       <VersusCard verusdata={verusdata} />
-      <PlayersTab hometeam={data.hometeam} awayteam={data.awayteam} />
+      <PredictionsServer matchid={nextmatch.id} userid={session.user.id} />
     </div>
   );
 }

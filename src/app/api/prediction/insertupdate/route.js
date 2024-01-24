@@ -20,10 +20,11 @@ export async function POST(request) {
         },
         data: {
           teamid: data.teamid,
-          playeroneid: data.players[0],
-          playertwoid: data.players[1],
-          playerthreeid: data.players[2],
-          playerfourid: data.players[3],
+          playeroneid: data.playeroneid,
+          playertwoid: data.playertwoid,
+          playerthreeid: data.playerthreeid,
+          playerfourid: data.playerfourid,
+          captainid: data.captainid,
         },
       });
       console.log("updated");
@@ -34,10 +35,11 @@ export async function POST(request) {
           userid: data.userid,
           matchid: data.matchid,
           teamid: data.teamid,
-          playeroneid: data.players[0],
-          playertwoid: data.players[1],
-          playerthreeid: data.players[2],
-          playerfourid: data.players[3],
+          playeroneid: data.playeroneid,
+          playertwoid: data.playertwoid,
+          playerthreeid: data.playerthreeid,
+          playerfourid: data.playerfourid,
+          captainid: data.captainid,
         },
       });
       console.log("created");

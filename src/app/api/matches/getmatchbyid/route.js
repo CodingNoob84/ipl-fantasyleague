@@ -3,17 +3,12 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function POST(request) {
+  const data = await request.json();
   try {
-    const currentDate = new Date();
     const result = await prisma.matches.findFirst({
       where: {
-        datetime: {
-          gt: currentDate.toISOString(),
-        },
-      },
-      orderBy: {
-        datetime: "asc",
+        id: data.matchid,
       },
       include: {
         hometeam: {
@@ -22,6 +17,15 @@ export async function GET() {
             shortName: true,
             logo: true,
             teamid: true,
+            players: {
+              select: {
+                id: true,
+                country: true,
+                fullname: true,
+                profileimage: true,
+                role: true,
+              },
+            },
           },
         },
         awayteam: {
@@ -30,6 +34,15 @@ export async function GET() {
             shortName: true,
             logo: true,
             teamid: true,
+            players: {
+              select: {
+                id: true,
+                country: true,
+                fullname: true,
+                profileimage: true,
+                role: true,
+              },
+            },
           },
         },
       },

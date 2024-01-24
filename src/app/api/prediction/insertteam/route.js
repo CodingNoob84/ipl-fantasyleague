@@ -5,7 +5,7 @@ export async function POST(request) {
   const data = await request.json();
   console.log(data);
   try {
-    const existingPrediction = await prisma.Prediction.findUnique({
+    const existingPrediction = await prisma.TeamPrediction.findUnique({
       where: {
         userid_matchid: {
           userid: data.userid,
@@ -14,38 +14,27 @@ export async function POST(request) {
       },
     });
     if (existingPrediction) {
-      const updatedPrediction = await prisma.Prediction.update({
+      const updatedPrediction = await prisma.TeamPrediction.update({
         where: {
           id: existingPrediction.id,
         },
         data: {
           teamid: data.teamid,
-          playeroneid: data.players[0],
-          playertwoid: data.players[1],
-          playerthreeid: data.players[2],
-          playerfourid: data.players[3],
         },
       });
-      console.log("updated");
+      //console.log("updated");
       return NextResponse.json({ success: true, data: updatedPrediction });
     } else {
-      const newPrediction = await prisma.Prediction.create({
+      const newPrediction = await prisma.TeamPrediction.create({
         data: {
           userid: data.userid,
           matchid: data.matchid,
           teamid: data.teamid,
-          playeroneid: data.players[0],
-          playertwoid: data.players[1],
-          playerthreeid: data.players[2],
-          playerfourid: data.players[3],
         },
       });
-      console.log("created");
+      //console.log("created");
       return NextResponse.json({ success: true, data: newPrediction });
     }
-
-    // console.log("created");
-    // return NextResponse.json({ success: true, data: newPrediction });
   } catch (error) {
     return NextResponse.json({
       success: false,

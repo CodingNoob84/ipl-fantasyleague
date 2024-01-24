@@ -51,9 +51,55 @@ export async function getTeamDetails(teamname) {
   }
 }
 
+export async function getMatchbyId(data) {
+  try {
+    const response = await axios.post(
+      `${baseurl}api/matches/getmatchbyid`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
 export async function getUpcomingMatches() {
   try {
     const response = await axios.get(`${baseurl}api/matches/upcoming`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getNextMatch() {
+  try {
+    const response = await axios.get(`${baseurl}api/matches/next`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function insertUpdatePredictions(data) {
+  try {
+    const response = await axios.post(
+      `${baseurl}api/prediction/insertupdate`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getAllPredictions(data) {
+  try {
+    const response = await axios.post(`${baseurl}api/prediction/getall`, data);
     return response.data;
   } catch (error) {
     console.error("Error fetching posts:", error.message);
