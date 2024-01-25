@@ -12,12 +12,19 @@ function GameRules() {
         GameRules
       </div>
       {show && (
-        <div className="flex flex-col gap-4 px-4">
-          <ul>
-            <li>Correctly predicting the winning team: X points</li>
-            <li>Selecting a player from the winning team: Y points</li>
-            <li>Selecting a player as a captain: Z points (double points)</li>
-          </ul>
+        <div className="flex flex-col gap-2 px-4 text-sm font-bold">
+          <div className="flex flex-row gap-2">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div>Correctly predicting the winning team: X points</div>
+          </div>
+          <div className="flex flex-row gap-2">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div>Selecting a player from the winning team: Y points</div>
+          </div>
+          <div className="flex flex-row gap-2">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div>Selecting a player as a captain: Z points (double points)</div>
+          </div>
         </div>
       )}
     </div>

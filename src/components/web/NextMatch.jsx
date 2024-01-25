@@ -26,7 +26,11 @@ async function NextMatch() {
       <VersusCard verusdata={verusdata} />
       <GameRules />
       {nextmatch ? (
-        <PredictionsServer matchid={nextmatch.id} userid={session.user.id} />
+        <PredictionsServer
+          matchid={nextmatch.id}
+          userid={session.user.id}
+          datetime={verusdata}
+        />
       ) : (
         <div className="flex justify-center items-center border shadow-md rounded-md">
           No Matches Available

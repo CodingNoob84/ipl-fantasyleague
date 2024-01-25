@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { getInitials } from "@/lib/utils";
+import { formatDateTime, getInitials } from "@/lib/utils";
 import PlayersTab from "./PlayersTab";
 import { useQuery } from "@tanstack/react-query";
 import { getAllPredictions, getMatchbyId } from "@/lib/dbservices";
@@ -86,11 +86,20 @@ function PredictionsCard({ userid, matchid }) {
                   </div>
                 ))}
               </div>
-              <div
-                onClick={() => setShowPredictions(false)}
-                className="mt-4 border rounded-md text-center p-4 bg-violet-300 cursor-pointer hover:bg-violet-400"
-              >
-                Change
+              <div>
+                <div
+                  onClick={() => setShowPredictions(false)}
+                  className="mt-4 border rounded-md text-center p-4 bg-violet-300 cursor-pointer hover:bg-violet-400"
+                >
+                  Change
+                </div>
+                <div className="text-xs text-center font-semibold mb-2">
+                  *you can change before{" "}
+                  {formatDateTime(
+                    predictionsdata.data.match.datetime,
+                    predictionsdata.data.match.timezone
+                  )}
+                </div>
               </div>
             </div>
           </div>

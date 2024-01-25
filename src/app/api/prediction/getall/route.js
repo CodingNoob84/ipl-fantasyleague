@@ -13,6 +13,7 @@ export async function POST(request) {
         },
       },
       include: {
+        match: true,
         team: true,
         playerone: true,
         playertwo: true,

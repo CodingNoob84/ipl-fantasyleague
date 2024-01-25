@@ -30,7 +30,7 @@ function VersusCard({ verusdata }) {
         </div>
       </div>
       <div className="text-sm text-center">
-        {getFormattedDatetime(verusdata.datetime)}
+        {/* {getFormattedDatetime(verusdata.datetime)} */}
         {formatDateTime(verusdata.datetime, verusdata.timezone)}
       </div>
     </div>
