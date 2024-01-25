@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { getFormattedDatetime } from "@/lib/utils";
+import { formatDateTime, getFormattedDatetime } from "@/lib/utils";
 
 function VersusCard({ verusdata }) {
   //console.log(verusdata);
@@ -31,7 +31,7 @@ function VersusCard({ verusdata }) {
       </div>
       <div className="text-sm text-center">
         {getFormattedDatetime(verusdata.datetime)}
-        {verusdata.datetime}
+        {formatDateTime(verusdata.datetime, verusdata.timezone)}
       </div>
     </div>
   );

@@ -28,3 +28,21 @@ export function getFormattedDatetime(inputDateString) {
   const result = `${formattedDate} ${formattedTime} ${ampm}`;
   return result;
 }
+
+export function formatDateTime(datetimeString, timezone) {
+  const options = {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZone: timezone,
+  };
+
+  const formattedDateTime = new Date(datetimeString).toLocaleDateString(
+    "en-US",
+    options
+  );
+  return formattedDateTime;
+}

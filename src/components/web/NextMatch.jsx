@@ -15,6 +15,7 @@ async function NextMatch() {
   //const { data: predictions } = await getAllPredictions();
   const verusdata = {
     datetime: nextmatch?.datetime,
+    timezone: nextmatch?.timezone,
     hometeam: nextmatch?.hometeam.shortName,
     hometeamlogo: nextmatch?.hometeam.logo,
     awayteam: nextmatch?.awayteam.shortName,
@@ -24,7 +25,13 @@ async function NextMatch() {
     <div className="flex flex-col">
       <VersusCard verusdata={verusdata} />
       <GameRules />
-      <PredictionsServer matchid={nextmatch.id} userid={session.user.id} />
+      {nextmatch ? (
+        <PredictionsServer matchid={nextmatch.id} userid={session.user.id} />
+      ) : (
+        <div className="flex justify-center items-center border shadow-md rounded-md">
+          No Matches Available
+        </div>
+      )}
     </div>
   );
 }
