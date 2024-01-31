@@ -64,6 +64,30 @@ export async function getMatchbyId(data) {
   }
 }
 
+export async function createEditMatch(data) {
+  console.log(baseurl);
+  try {
+    const response = await axios.post(
+      `${baseurl}api/matches/insertupdate`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getAllMatches() {
+  try {
+    const response = await axios.get(`${baseurl}api/matches/all`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
 export async function getUpcomingMatches() {
   try {
     const response = await axios.get(`${baseurl}api/matches/upcoming`);
@@ -88,6 +112,45 @@ export async function insertUpdatePredictions(data) {
   try {
     const response = await axios.post(
       `${baseurl}api/prediction/insertupdate`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getScorecardByMatchId(data) {
+  try {
+    const response = await axios.post(
+      `${baseurl}api/matches/getscorecardbyid`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function getTeamScorecardById(data) {
+  try {
+    const response = await axios.post(
+      `${baseurl}api/matches/getteamscorebyid`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
+
+export async function updatePlayingFifteen(data) {
+  try {
+    const response = await axios.post(
+      `${baseurl}api/matches/updateplayingfifteen`,
       data
     );
     return response.data;

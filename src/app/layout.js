@@ -22,7 +22,7 @@ export default async function RootLayout({ children }) {
         <ReactQueryClientProvider>
           <NextAuthSessionProvider session={session}>
             {children}
-            <Toaster richColors />
+            <Toaster richColors position="top-center" />
           </NextAuthSessionProvider>
         </ReactQueryClientProvider>
       </body>

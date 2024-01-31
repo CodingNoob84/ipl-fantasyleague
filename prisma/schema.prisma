@@ -49,16 +49,17 @@ model User {
 }
 
 model IPLTeams {
-  id             String           @id @map("_id")
-  fullName       String
-  shortName      String           @unique
-  teamid         String           @unique
-  logo           String
-  players        Player[]
-  homeMatches    Matches[]        @relation("HomeTeam")
-  awayMatches    Matches[]        @relation("AwayTeam")
-  TeamPrediction TeamPrediction[]
-  Prediction     Prediction[]
+  id              String            @id @map("_id")
+  fullName        String
+  shortName       String            @unique
+  teamid          String            @unique
+  logo            String
+  players         Player[]
+  homeMatches     Matches[]         @relation("HomeTeam")
+  awayMatches     Matches[]         @relation("AwayTeam")
+  TeamPrediction  TeamPrediction[]
+  Prediction      Prediction[]
+  PlayerScorecard PlayerScorecard[]
 }
 
 model Player {
@@ -75,6 +76,7 @@ model Player {
   predictionpthree Prediction[]       @relation("playerthree")
   predictionpfour  Prediction[]       @relation("playerfour")
   captain          Prediction[]       @relation("captain")
+  PlayerScorecard  PlayerScorecard[]
 }
 
 model Matches {
@@ -88,6 +90,8 @@ model Matches {
   teamprediction   TeamPrediction[]
   playerprediction PlayerPrediction[]
   prediction       Prediction[]
+  PlayerScorecard  PlayerScorecard[]
+  UserPoints       UserPoints[]
 }
 
 model Prediction {
@@ -132,6 +136,33 @@ model PlayerPrediction {
   match    Matches @relation(fields: [matchid], references: [id])
   playerid String
   player   Player  @relation(name: "predictedplayer", fields: [playerid], references: [id])
+}
+
+model PlayerScorecard {
+  id       String   @id @default(cuid()) @map("_id")
+  player   Player?  @relation(fields: [playerid], references: [id])
+  playerid String?
+  matchid  String
+  match    Matches  @relation(fields: [matchid], references: [id])
+  teamid   String
+  team     IPLTeams @relation(fields: [teamid], references: [teamid])
+  order    Int
+  runs     Int      @default(0)
+  batting  Int      @default(0)
+  wickets  Int      @default(0)
+  bowling  Int      @default(0)
+  catches  Int      @default(0)
+  runouts  Int      @default(0)
+  fielding Int      @default(0)
+  motm     Boolean  @default(false)
+  total    Int      @default(0)
+}
+
+model UserPoints {
+  id      String  @id @default(cuid()) @map("_id")
+  matchid String
+  match   Matches @relation(fields: [matchid], references: [id])
+  points  Int
 }
 
 model test {

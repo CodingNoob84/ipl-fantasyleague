@@ -40,8 +40,8 @@ function AllPlayerTable() {
     queryKey: ["allplayers"],
     queryFn: () => getAllPlayers(),
   });
-  console.log("isloading", isLoading);
-  console.log(data);
+  //console.log("isloading", isLoading);
+  //console.log(data);
 
   return (
     <div className="rounded-md border">

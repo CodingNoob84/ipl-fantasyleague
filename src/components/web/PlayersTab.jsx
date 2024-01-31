@@ -99,6 +99,25 @@ function PlayersTab({ matchid, teamid, players, setShowPredictions }) {
 
   const handleSubmit = async () => {
     setUpdateLoading(true);
+    // Check if teamid is null
+    if (!selectedTeam) {
+      setUpdateLoading(false);
+      toast.error("Please select a team");
+      //alert("Please select a team.");
+      return;
+    }
+
+    // Check if any player does not have an ID
+    const hasMissingPlayerId = selectedPlayers.some(
+      (player) => !player.playerid
+    );
+    if (hasMissingPlayerId) {
+      setUpdateLoading(false);
+      toast.error("Please select players for all slots.");
+      //alert("Please select players for all slots.");
+      return;
+    }
+
     const playerIdsObject = selectedPlayers.reduce((acc, player) => {
       acc[player.id] = player.playerid;
       return acc;
@@ -107,6 +126,12 @@ function PlayersTab({ matchid, teamid, players, setShowPredictions }) {
       (player) => player.isCaptain === true
     );
     const captainid = captainObject ? captainObject.playerid : null;
+    if (!captainid) {
+      setUpdateLoading(false);
+      toast.error("Please select a captain");
+      //alert("Please select a team.");
+      return;
+    }
     const prediction = {
       userid: session.user.id,
       matchid: matchid,
@@ -213,7 +238,7 @@ function PlayersTab({ matchid, teamid, players, setShowPredictions }) {
                 key={player.id}
                 onClick={() => handleSelectPlayers(player)}
                 className={cn(
-                  " border rounded-lg shadow-sm cursor-pointer flex flex-row gap-4 justify-start items-center",
+                  " border select-none rounded-lg shadow-sm cursor-pointer flex flex-row gap-4 justify-start items-center",
                   selectedPlayers.some(
                     (selectedPlayer) => selectedPlayer.playerid === player.id
                   ) && "bg-green-300"
@@ -239,7 +264,7 @@ function PlayersTab({ matchid, teamid, players, setShowPredictions }) {
                 key={player.id}
                 onClick={() => handleSelectPlayers(player)}
                 className={cn(
-                  " border rounded-lg shadow-sm cursor-pointer  flex flex-row gap-4 justify-start items-center",
+                  " border select-none rounded-lg shadow-sm cursor-pointer  flex flex-row gap-4 justify-start items-center",
                   selectedPlayers.some(
                     (selectedPlayer) => selectedPlayer.playerid === player.id
                   ) && "bg-green-300"

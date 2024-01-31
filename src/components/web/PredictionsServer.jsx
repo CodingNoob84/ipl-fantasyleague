@@ -8,9 +8,9 @@ import {
 } from "@tanstack/react-query";
 
 async function PredictionsServer({ matchid, userid }) {
-  const { data: predictions } = await getAllPredictions({ matchid, userid });
+  //const { data: predictions } = await getAllPredictions({ matchid, userid });
   //console.log(predictions);
-  const { data: matchdetails } = await getMatchbyId({ matchid });
+  //const { data: matchdetails } = await getMatchbyId({ matchid });
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["allpredictions", userid, matchid],
@@ -22,12 +22,7 @@ async function PredictionsServer({ matchid, userid }) {
   });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PredictionsCard
-        predictions={predictions}
-        matchdetails={matchdetails}
-        userid={userid}
-        matchid={matchid}
-      />
+      <PredictionsCard userid={userid} matchid={matchid} />
     </HydrationBoundary>
   );
 }

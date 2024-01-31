@@ -1,3 +1,4 @@
+import PlayingFifteen from "@/components/matches/PlayingFifteen";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { getTeamDetails } from "@/lib/dbservices";
 import { getInitials } from "@/lib/utils";
@@ -24,7 +25,8 @@ async function TeamDetailsPage({ params }) {
             <div>Team Count:{data.players.length}</div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <PlayingFifteen players={data.players} teamname={data.shortName} />
+        {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {data.players.map((player) => (
             <div key={player.id} className="flex flex-row gap-4 border p-2">
               <Avatar>
@@ -42,7 +44,7 @@ async function TeamDetailsPage({ params }) {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
