@@ -9,6 +9,8 @@ import {
   useSensors,
   DragOverlay,
   useDroppable,
+  MouseSensor,
+  TouchSensor,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -82,7 +84,7 @@ const Container = ({ id, items, label }) => {
   );
 };
 
-function PlayingFifteen({ players, matchid, teamid, setShow }) {
+function PlayingFifteen({ players, matchid, teamid, setShow, refetch }) {
   const queryClient = new QueryClient();
   const updatePlayingFifteenMutation = useMutation({
     // Specify the mutation function
@@ -102,7 +104,9 @@ function PlayingFifteen({ players, matchid, teamid, setShow }) {
   const [activePlayer, setActivePlayer] = useState();
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    //useSensor(PointerSensor),
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -117,8 +121,11 @@ function PlayingFifteen({ players, matchid, teamid, setShow }) {
     };
     try {
       const result = await updatePlayingFifteenMutation.mutateAsync(data);
+      //console.log(result);
       if (result.success) {
-        console.log("success");
+        //console.log("success");
+        refetch();
+        queryClient.invalidateQueries(["teamscorecard", matchid, teamid]);
         setShow(false);
       }
     } catch (error) {

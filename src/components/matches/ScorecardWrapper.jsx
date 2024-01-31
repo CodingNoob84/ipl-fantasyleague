@@ -6,13 +6,20 @@ import { getTeamScorecardById } from "@/lib/dbservices";
 import { useQuery } from "@tanstack/react-query";
 
 function ScorecardWrapper({ players, teamid, matchid }) {
-  const { data: scorecardData, isLoading: scorecardLoading } = useQuery({
+  const {
+    data: scorecardData,
+    isLoading: scorecardLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["teamscorecard", matchid, teamid],
     queryFn: () => getTeamScorecardById({ matchid: matchid, teamid: teamid }),
     staleTime: 0,
   });
 
-  const [show, setShow] = useState(scorecardData?.data.length === 0);
+  console.log(scorecardData?.data.length);
+
+  const [show, setShow] = useState(scorecardData?.data.length === 0 || true);
+  console.log("show", show);
 
   if (scorecardLoading) {
     return <div>Loading scorecard data...</div>;
@@ -33,6 +40,7 @@ function ScorecardWrapper({ players, teamid, matchid }) {
             teamid={teamid}
             matchid={matchid}
             setShow={setShow}
+            refetch={refetch}
           />
         </div>
       ) : (

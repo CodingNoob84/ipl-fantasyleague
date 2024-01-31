@@ -51,14 +51,14 @@ export function AddScore({ defaultvalues }) {
     defaultValues: defaultvalues,
   });
   const onSubmit = async (data) => {
-    //console.log(data)
-    const result = await createEditPlayer(data);
-    console.log(result);
-    if (result.success) {
-      form.reset();
-      setOpen(false);
-      queryClient.invalidateQueries({ queryKey: ["allplayers"] });
-    }
+    console.log(data);
+    //const result = await createEditPlayer(data);
+    // console.log(result);
+    // if (result.success) {
+    //   form.reset();
+    //   setOpen(false);
+    //   queryClient.invalidateQueries({ queryKey: ["allplayers"] });
+    // }
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
