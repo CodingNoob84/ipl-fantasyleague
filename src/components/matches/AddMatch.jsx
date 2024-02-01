@@ -59,8 +59,21 @@ function AddMatch() {
   });
 
   const onSubmit = async (data) => {
-    data.datetime = mergeDateTimeString(data.date, data.time);
-    //console.log(data);
+    const matchInfo = {
+      date: new Date(data.date).toLocaleDateString(),
+      time: data.time,
+      timezone: "Asia/Kolkata",
+    };
+    //console.log(matchInfo);
+    // Split the date string and construct the date object in local time
+    const [month, day, year] = matchInfo.date.split("/");
+    const [hours, minutes] = matchInfo.time.split(":");
+    const localDate = new Date(year, month - 1, day, hours, minutes);
+    // Convert to UTC time by setting the timezone
+    const options = { timeZone: matchInfo.timezone, timeZoneName: "short" };
+    data.datetime = localDate.toUTCString();
+
+    const datetime = new Date(data.date);
     if (data.datetime) {
       const result = await createEditMatch(data);
       //console.log(result);

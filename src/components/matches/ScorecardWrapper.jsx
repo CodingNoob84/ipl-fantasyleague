@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PlayingFifteen from "./PlayingFifteen";
 import Scorecard from "./Scorecard";
 import { getTeamScorecardById } from "@/lib/dbservices";
@@ -16,10 +16,7 @@ function ScorecardWrapper({ players, teamid, matchid }) {
     staleTime: 0,
   });
 
-  console.log(scorecardData?.data.length);
-
-  const [show, setShow] = useState(scorecardData?.data.length === 0 || true);
-  console.log("show", show);
+  const [show, setShow] = useState(scorecardData?.data.length === 0);
 
   if (scorecardLoading) {
     return <div>Loading scorecard data...</div>;
@@ -39,7 +36,7 @@ function ScorecardWrapper({ players, teamid, matchid }) {
             players={players}
             teamid={teamid}
             matchid={matchid}
-            setShow={setShow}
+            setShow={setShow} // Pass setShow function to PlayingFifteen
             refetch={refetch}
           />
         </div>

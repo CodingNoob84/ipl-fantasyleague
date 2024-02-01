@@ -29,7 +29,7 @@ export function getFormattedDatetime(inputDateString) {
   return result;
 }
 
-export function formatDateTime(datetimeString, timezone) {
+export function formatDateTime(datetimeString) {
   const options = {
     weekday: "long",
     month: "short",
@@ -37,7 +37,6 @@ export function formatDateTime(datetimeString, timezone) {
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-    timeZone: timezone,
   };
 
   const formattedDateTime = new Date(datetimeString).toLocaleDateString(
